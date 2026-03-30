@@ -1,4 +1,4 @@
-package cl.RedNorte.Backend.model;
+package cl.RedNorte.Backend.model.reasignaciones;
 
 import java.time.LocalDateTime;
 

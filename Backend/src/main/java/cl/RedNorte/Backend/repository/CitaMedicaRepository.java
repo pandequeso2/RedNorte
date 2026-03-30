@@ -1,6 +1,8 @@
 package cl.RedNorte.Backend.repository;
-import cl.RedNorte.Backend.model.CitaMedica;
+
 import cl.RedNorte.Backend.model.EstadoCita;
+import cl.RedNorte.Backend.model.primary.CitaMedica;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import java.util.List;

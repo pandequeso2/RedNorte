@@ -1,8 +1,10 @@
-package cl.RedNorte.Backend.repository;
+package cl.RedNorte.Backend.repository.notificacion;
 
-import cl.RedNorte.Backend.model.Notificacion;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+
+import cl.RedNorte.Backend.model.notificaciones.Notificacion;
+
 import java.util.List;
 
 @Repository

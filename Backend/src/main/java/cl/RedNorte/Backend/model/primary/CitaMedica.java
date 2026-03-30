@@ -1,7 +1,8 @@
-package cl.RedNorte.Backend.model;
+package cl.RedNorte.Backend.model.primary;
 
 import java.time.LocalDateTime;
 
+import cl.RedNorte.Backend.model.EstadoCita;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -21,6 +22,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+
 public class CitaMedica {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

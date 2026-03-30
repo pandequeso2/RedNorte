@@ -1,8 +1,9 @@
-package cl.RedNorte.Backend.repository;
+package cl.RedNorte.Backend.repository.espera;
 
 
-import cl.RedNorte.Backend.model.SolicitudEspera;
-import cl.RedNorte.Backend.model.TipoAtencion;
+import cl.RedNorte.Backend.model.espera.SolicitudEspera;
+import cl.RedNorte.Backend.model.espera.TipoAtencion;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import java.util.List;

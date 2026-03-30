@@ -1,7 +1,9 @@
-package cl.RedNorte.Backend.model;
+package cl.RedNorte.Backend.model.espera;
 
 import java.time.LocalDateTime;
 
+import cl.RedNorte.Backend.model.primary.Especialidad;
+import cl.RedNorte.Backend.model.primary.Paciente;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

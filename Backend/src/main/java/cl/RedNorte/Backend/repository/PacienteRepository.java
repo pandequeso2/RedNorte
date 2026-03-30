@@ -5,7 +5,7 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import cl.RedNorte.Backend.model.Paciente;
+import cl.RedNorte.Backend.model.primary.Paciente;
 
 @Repository
 public interface PacienteRepository extends JpaRepository<Paciente, Long>{

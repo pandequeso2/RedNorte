@@ -1,7 +1,7 @@
 package cl.RedNorte.Backend.service;
 
-import cl.RedNorte.Backend.model.Notificacion;
-import cl.RedNorte.Backend.repository.NotificacionRepository;
+import cl.RedNorte.Backend.model.notificaciones.Notificacion;
+import cl.RedNorte.Backend.repository.notificacion.NotificacionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.util.List;

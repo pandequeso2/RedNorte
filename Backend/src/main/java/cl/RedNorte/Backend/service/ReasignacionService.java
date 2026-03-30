@@ -7,11 +7,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import cl.RedNorte.Backend.events.CitaCanceladaEvent;
-import cl.RedNorte.Backend.model.ReasignacionCita;
-import cl.RedNorte.Backend.model.SolicitudEspera;
+import cl.RedNorte.Backend.model.espera.SolicitudEspera;
+import cl.RedNorte.Backend.model.reasignaciones.ReasignacionCita;
 import cl.RedNorte.Backend.repository.CitaMedicaRepository;
-import cl.RedNorte.Backend.repository.ReasignacionRepository;
-import cl.RedNorte.Backend.repository.SolicitudEsperaRepository;
+import cl.RedNorte.Backend.repository.espera.SolicitudEsperaRepository;
+import cl.RedNorte.Backend.repository.reasignacion.ReasignacionRepository;
 import lombok.RequiredArgsConstructor;
 
 @Service

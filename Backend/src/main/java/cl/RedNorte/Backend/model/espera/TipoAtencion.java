@@ -1,4 +1,4 @@
-package cl.RedNorte.Backend.model;
+package cl.RedNorte.Backend.model.espera;
 
 public enum TipoAtencion {
     CONSULTA_MEDICA,

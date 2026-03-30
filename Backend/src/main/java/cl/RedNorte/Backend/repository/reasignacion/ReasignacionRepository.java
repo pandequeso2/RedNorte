@@ -1,8 +1,10 @@
-package cl.RedNorte.Backend.repository;
+package cl.RedNorte.Backend.repository.reasignacion;
 
-import cl.RedNorte.Backend.model.ReasignacionCita;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+
+import cl.RedNorte.Backend.model.reasignaciones.ReasignacionCita;
+
 import java.util.List;
 
 @Repository

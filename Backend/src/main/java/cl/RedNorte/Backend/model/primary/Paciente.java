@@ -1,4 +1,6 @@
-package cl.RedNorte.Backend.model;
+package cl.RedNorte.Backend.model.primary;
+
+import java.time.LocalDate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -10,19 +12,29 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+
 @Entity
-@Table(name = "Especialidad")
+@Table(name="Pacientes")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Especialidad {
+public class Paciente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false)
+    private String rut;
+    @Column(nullable = false)
     private String nombre;
+    @Column(nullable = false)
+    private String email;
     @Column
-    private String descripcion;
+    private LocalDate fechaNac;
+    @Column(nullable = true)
+    private String fono;
+    @Column(nullable = false)
+    private char genero;
+    
 
 
 }

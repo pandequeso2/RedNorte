@@ -5,8 +5,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import cl.RedNorte.Backend.events.CitaCanceladaEvent;
-import cl.RedNorte.Backend.model.CitaMedica;
 import cl.RedNorte.Backend.model.EstadoCita;
+import cl.RedNorte.Backend.model.primary.CitaMedica;
 import cl.RedNorte.Backend.repository.CitaMedicaRepository;
 import lombok.RequiredArgsConstructor;
 

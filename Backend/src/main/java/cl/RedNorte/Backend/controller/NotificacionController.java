@@ -1,6 +1,6 @@
 package cl.RedNorte.Backend.controller;
 
-import cl.RedNorte.Backend.model.Notificacion;
+import cl.RedNorte.Backend.model.notificaciones.Notificacion;
 import cl.RedNorte.Backend.service.NotificacionService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
