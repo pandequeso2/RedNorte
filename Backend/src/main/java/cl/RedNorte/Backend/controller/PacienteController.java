@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import cl.RedNorte.Backend.dto.ActualizarContactoRequest;
 import cl.RedNorte.Backend.model.primary.Paciente;
 import cl.RedNorte.Backend.service.PacienteService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -53,7 +52,7 @@ public class PacienteController {
     @PutMapping("/{id}/contacto")
     @Operation(summary = "Actualizar correo y teléfono de un paciente")
     public ResponseEntity<Paciente> actualizarContacto(
-            @PathVariable Long id, 
+            @PathVariable Long id,
             @RequestBody ActualizarContactoRequest request) {
         return ResponseEntity.ok(pacienteService.actualizarContacto(id, request.getEmail(), request.getFono()));
     }
