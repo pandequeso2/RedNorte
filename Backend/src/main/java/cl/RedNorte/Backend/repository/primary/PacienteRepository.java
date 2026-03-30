@@ -1,4 +1,4 @@
-package cl.RedNorte.Backend.repository;
+package cl.RedNorte.Backend.repository.primary;
 
 import java.util.Optional;
 

@@ -1,4 +1,4 @@
-package cl.RedNorte.Backend.repository;
+package cl.RedNorte.Backend.repository.primary;
 
 import cl.RedNorte.Backend.model.EstadoCita;
 import cl.RedNorte.Backend.model.primary.CitaMedica;

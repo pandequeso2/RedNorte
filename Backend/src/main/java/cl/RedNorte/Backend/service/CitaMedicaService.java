@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import cl.RedNorte.Backend.events.CitaCanceladaEvent;
 import cl.RedNorte.Backend.model.EstadoCita;
 import cl.RedNorte.Backend.model.primary.CitaMedica;
-import cl.RedNorte.Backend.repository.CitaMedicaRepository;
+import cl.RedNorte.Backend.repository.primary.CitaMedicaRepository;
 import lombok.RequiredArgsConstructor;
 
 @Service

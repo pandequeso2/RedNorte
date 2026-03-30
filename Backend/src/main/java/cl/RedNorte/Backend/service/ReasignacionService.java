@@ -9,8 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 import cl.RedNorte.Backend.events.CitaCanceladaEvent;
 import cl.RedNorte.Backend.model.espera.SolicitudEspera;
 import cl.RedNorte.Backend.model.reasignaciones.ReasignacionCita;
-import cl.RedNorte.Backend.repository.CitaMedicaRepository;
 import cl.RedNorte.Backend.repository.espera.SolicitudEsperaRepository;
+import cl.RedNorte.Backend.repository.primary.CitaMedicaRepository;
 import cl.RedNorte.Backend.repository.reasignacion.ReasignacionRepository;
 import lombok.RequiredArgsConstructor;
 
@@ -20,23 +20,18 @@ public class ReasignacionService {
 
     private final SolicitudEsperaRepository solicitudRepository;
     private final ReasignacionRepository reasignacionRepository;
-    // Necesitamos este para obtener la especialidad de la cita cancelada
-    private final CitaMedicaRepository citaMedicaRepository; 
+    private final CitaMedicaRepository citaMedicaRepository;
 
     @Transactional
     public void procesarCancelacion(Long citaId) {
-        // 1. Obtener los datos de la cita que se canceló
         var cita = citaMedicaRepository.findById(citaId)
             .orElseThrow(() -> new RuntimeException("Cita no encontrada: " + citaId));
-
-        // 2. Ejecutar la lógica de reasignación usando la especialidad de esa cita
         ejecutarLogicaReasignacion(cita.getId(), cita.getEspecialidad().getId());
     }
 
     @EventListener
     @Transactional
     public void manejarCitaCancelada(CitaCanceladaEvent evento) {
-        // Este método sigue funcionando para eventos automáticos
         ejecutarLogicaReasignacion(evento.getCitaId(), evento.getEspecialidadId());
     }
 
@@ -52,15 +47,17 @@ public class ReasignacionService {
             ReasignacionCita nuevaAsignacion = new ReasignacionCita();
             nuevaAsignacion.setCitaCanceladaId(citaId);
             nuevaAsignacion.setSolicitudEsperaId(beneficiado.getId());
-            nuevaAsignacion.setPacienteId(beneficiado.getPaciente().getId());
+            // FIX: antes era beneficiado.getPaciente().getId() → NullPointerException
+            // ahora SolicitudEspera tiene pacienteId como Long directamente
+            nuevaAsignacion.setPacienteId(beneficiado.getPacienteId());
             nuevaAsignacion.setNotificacionExitosa(true);
-            
+
             reasignacionRepository.save(nuevaAsignacion);
 
             beneficiado.setEstado("ASIGNADO");
             solicitudRepository.save(beneficiado);
-            
-            System.out.println("Éxito: Paciente " + beneficiado.getPaciente().getId() + " reasignado.");
+
+            System.out.println("Éxito: Paciente " + beneficiado.getPacienteId() + " reasignado.");
         } else {
             System.out.println("No hay pacientes en lista de espera para esta especialidad.");
         }

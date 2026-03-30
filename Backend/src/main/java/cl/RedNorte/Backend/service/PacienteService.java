@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import cl.RedNorte.Backend.model.primary.Paciente;
-import cl.RedNorte.Backend.repository.PacienteRepository;
+import cl.RedNorte.Backend.repository.primary.PacienteRepository;
 import lombok.RequiredArgsConstructor;
 
 @Service
