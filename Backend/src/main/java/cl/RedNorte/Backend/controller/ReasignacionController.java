@@ -16,7 +16,7 @@ public class ReasignacionController {
     private final ReasignacionService reasignacionService;
 
     @PostMapping("/procesar-cancelacion/{citaId}")
-    @Operation(summary = "Activar motor de reasignación", description = "Busca al paciente más prioritario para ocupar una cita cancelada [cite: 23]")
+    @Operation(summary = "Activar motor de reasignación", description = "Busca al paciente más prioritario para ocupar una cita cancelada")
     public ResponseEntity<String> ejecutarReasignacion(@PathVariable Long citaId) {
         reasignacionService.procesarCancelacion(citaId);
         return ResponseEntity.ok("Proceso de reasignación ejecutado con éxito.");

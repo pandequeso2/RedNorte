@@ -2,6 +2,7 @@ package cl.RedNorte.Backend.controller;
 
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -47,7 +48,7 @@ public class PacienteController {
     @PostMapping("/registrar")
     @Operation(summary = "Registrar un nuevo paciente en el sistema")
     public ResponseEntity<Paciente> registrarPaciente(@RequestBody Paciente paciente) {
-        return ResponseEntity.ok(pacienteService.registrarPaciente(paciente));
+        return ResponseEntity.status(HttpStatus.CREATED).body(pacienteService.registrarPaciente(paciente));
     }
 
     @PutMapping("/{id}/contacto")
