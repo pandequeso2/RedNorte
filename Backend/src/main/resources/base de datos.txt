@@ -1,0 +1,114 @@
+-- ============================================================
+--  RedNorte DB - Script de población de datos
+--  Orden: especialidad → pacientes → citas_medicas
+--          → solicitud_espera → reasignaciones_automaticas
+--          → notificaciones_pacientes
+-- ============================================================
+
+USE rednortedb;
+
+-- ------------------------------------------------------------
+-- 1. ESPECIALIDAD
+-- ------------------------------------------------------------
+INSERT INTO especialidad (nombre, descripcion) VALUES
+('Cardiología',         'Diagnóstico y tratamiento de enfermedades del corazón'),
+('Traumatología',       'Atención de lesiones del sistema músculo-esquelético'),
+('Neurología',          'Enfermedades del sistema nervioso central y periférico'),
+('Pediatría',           'Atención médica integral de niños y adolescentes'),
+('Ginecología',         'Salud reproductiva y sistema genital femenino'),
+('Oftalmología',        'Diagnóstico y tratamiento de enfermedades oculares'),
+('Dermatología',        'Enfermedades de la piel, cabello y uñas'),
+('Psiquiatría',         'Trastornos mentales y del comportamiento'),
+('Oncología',           'Diagnóstico y tratamiento del cáncer'),
+('Medicina Interna',    'Atención de adultos con enfermedades crónicas y agudas');
+
+
+-- ------------------------------------------------------------
+-- 2. PACIENTES
+-- ------------------------------------------------------------
+INSERT INTO pacientes (rut, nombre, email, fechaNac, fono, genero) VALUES
+('12345678-9', 'Carlos Mendoza Ríos',       'carlos.mendoza@gmail.com',   '1985-03-14', '+56912345678', 'M'),
+('98765432-1', 'María González López',      'maria.gonzalez@gmail.com',   '1990-07-22', '+56987654321', 'F'),
+('11223344-5', 'Andrés Pérez Soto',         'andres.perez@hotmail.com',   '1978-11-05', '+56911223344', 'M'),
+('55667788-K', 'Valentina Torres Muñoz',    'vale.torres@gmail.com',      '2000-01-30', '+56955667788', 'F'),
+('33445566-2', 'Roberto Fuentes Díaz',      'roberto.fuentes@gmail.com',  '1965-09-18', '+56933445566', 'M'),
+('22334455-7', 'Sofía Ramírez Castro',      'sofia.ramirez@yahoo.com',    '1995-04-12', '+56922334455', 'F'),
+('44556677-3', 'Felipe Morales Vega',       'felipe.morales@gmail.com',   '1982-12-03', '+56944556677', 'M'),
+('66778899-0', 'Camila Herrera Pino',       'camila.herrera@gmail.com',   '2003-06-25', '+56966778899', 'F'),
+('77889900-8', 'Diego Salinas Rojas',       'diego.salinas@outlook.com',  '1970-08-09', '+56977889900', 'M'),
+('88990011-6', 'Daniela Vargas Espinoza',   'daniela.vargas@gmail.com',   '1988-02-17', '+56988990011', 'F');
+
+
+-- ------------------------------------------------------------
+-- 3. CITAS_MEDICAS
+--    estado: DISPONIBLE | RESERVADA | CANCELADA | COMPLETADA
+-- ------------------------------------------------------------
+INSERT INTO citas_medicas (nombreMedico, especialidadId, fechaHora, estado, pacienteId, consultorio) VALUES
+-- Citas disponibles (sin paciente)
+('Dr. Héctor Vidal',        1, '2025-08-01 09:00:00', 'DISPONIBLE',  NULL, 'Consultorio 101'),
+('Dra. Laura Espinoza',     2, '2025-08-01 10:30:00', 'DISPONIBLE',  NULL, 'Consultorio 205'),
+('Dr. Martín Ibáñez',       3, '2025-08-02 08:00:00', 'DISPONIBLE',  NULL, 'Consultorio 308'),
+('Dra. Paula Reyes',        4, '2025-08-02 11:00:00', 'DISPONIBLE',  NULL, 'Consultorio 110'),
+('Dr. Sergio Castillo',     5, '2025-08-03 09:30:00', 'DISPONIBLE',  NULL, 'Consultorio 212'),
+-- Citas reservadas (con paciente asignado)
+('Dra. Carmen Ossa',        6, '2025-07-28 14:00:00', 'RESERVADA',   1,    'Consultorio 403'),
+('Dr. Pablo Núñez',         7, '2025-07-29 15:00:00', 'RESERVADA',   2,    'Consultorio 501'),
+('Dra. Ana Quezada',        8, '2025-07-30 10:00:00', 'RESERVADA',   3,    'Consultorio 602'),
+('Dr. Luis Tapia',          9, '2025-07-31 08:30:00', 'RESERVADA',   4,    'Consultorio 704'),
+('Dra. Mónica Salgado',    10, '2025-07-25 13:00:00', 'RESERVADA',   5,    'Consultorio 115'),
+-- Citas canceladas (disponibles para reasignación)
+('Dr. Héctor Vidal',        1, '2025-07-20 09:00:00', 'CANCELADA',   6,    'Consultorio 101'),
+('Dra. Laura Espinoza',     2, '2025-07-21 10:30:00', 'CANCELADA',   7,    'Consultorio 205'),
+-- Citas completadas
+('Dr. Martín Ibáñez',       3, '2025-07-10 08:00:00', 'COMPLETADA',  8,    'Consultorio 308'),
+('Dra. Paula Reyes',        4, '2025-07-12 11:00:00', 'COMPLETADA',  9,    'Consultorio 110'),
+('Dr. Sergio Castillo',     5, '2025-07-15 09:30:00', 'COMPLETADA',  10,   'Consultorio 212');
+
+
+-- ------------------------------------------------------------
+USE rednorte_espera;
+-- 4. SOLICITUD_ESPERA
+--    tipo_atencion: CONSULTA_MEDICA | PROCEDIMIENTO | DIAGNOSTICO
+--                  | INTERVENCION_QUIRURGICA | URGENCIA_EXTREMA
+--    estado: PENDIENTE | ASIGNADO | CANCELADO
+--    prioridad: 1 (Baja) → 5 (Extrema)
+-- ------------------------------------------------------------
+INSERT INTO solicitud_espera (pacienteId, especialidadId, tipoAtencion, prioridad, fechaIngreso, estado, observaciones) VALUES
+(1,  1,  'CONSULTA_MEDICA',         2, '2025-07-01 08:00:00', 'PENDIENTE',  'Paciente con historial de hipertensión'),
+(2,  2,  'PROCEDIMIENTO',           3, '2025-07-02 09:30:00', 'PENDIENTE',  'Lesión de rodilla post accidente'),
+(3,  3,  'DIAGNOSTICO',             4, '2025-07-03 10:00:00', 'PENDIENTE',  'Cefaleas recurrentes sin diagnóstico'),
+(4,  4,  'CONSULTA_MEDICA',         1, '2025-07-04 11:00:00', 'PENDIENTE',  NULL),
+(5,  5,  'INTERVENCION_QUIRURGICA', 5, '2025-07-05 07:00:00', 'PENDIENTE',  'Urgencia ginecológica severa'),
+(6,  6,  'DIAGNOSTICO',             2, '2025-07-06 14:00:00', 'ASIGNADO',   'Pérdida de visión progresiva'),
+(7,  7,  'CONSULTA_MEDICA',         1, '2025-07-07 15:00:00', 'ASIGNADO',   'Dermatitis crónica'),
+(8,  8,  'URGENCIA_EXTREMA',        5, '2025-07-08 06:30:00', 'CANCELADO',  'Paciente canceló por mejoría'),
+(9,  9,  'PROCEDIMIENTO',           3, '2025-07-09 09:00:00', 'PENDIENTE',  'Control post quimioterapia'),
+(10, 10, 'CONSULTA_MEDICA',         2, '2025-07-10 10:30:00', 'PENDIENTE',  'Diabetes tipo 2 descompensada');
+
+
+-- ------------------------------------------------------------
+USE rednorte_reasignaciones;
+-- 5. REASIGNACIONES_AUTOMATICAS
+--    Referencias: citas_medicas (11,12 = CANCELADAS), solicitud_espera
+-- ------------------------------------------------------------
+INSERT INTO reasignaciones_automaticas (citaCanceladaId, solicitudEsperaId, pacienteId, fechaProcesamiento, notificacionExitosa) VALUES
+(11, 6,  6,  '2025-07-20 09:05:00', 1),
+(12, 7,  7,  '2025-07-21 10:35:00', 1),
+(11, 1,  1,  '2025-07-20 09:10:00', 0);
+
+
+-- ------------------------------------------------------------
+USE rednorte_notificaciones;
+-- 6. NOTIFICACIONES_PACIENTES
+-- ------------------------------------------------------------
+INSERT INTO notificaciones_pacientes (pacienteId, mensaje, fechaEnvio, leida) VALUES
+(1,  'Su solicitud de espera ha sido registrada exitosamente.',                              '2025-07-01 08:01:00', 1),
+(2,  'Tiene una cita disponible en Traumatología el 01/08/2025 a las 10:30.',               '2025-07-02 09:31:00', 1),
+(3,  'Su cita en Neurología fue confirmada para el 02/08/2025.',                            '2025-07-03 10:01:00', 0),
+(4,  'Recordatorio: tiene una consulta en Pediatría mañana a las 11:00.',                   '2025-07-04 08:00:00', 0),
+(5,  'Su solicitud de intervención quirúrgica es de alta prioridad y está en proceso.',     '2025-07-05 07:01:00', 1),
+(6,  'Se le ha reasignado una cita en Oftalmología por cancelación de otro paciente.',      '2025-07-20 09:05:00', 1),
+(7,  'Se le ha reasignado una cita en Dermatología. Por favor confirme su asistencia.',     '2025-07-21 10:35:00', 0),
+(8,  'Su solicitud fue cancelada según su requerimiento. Puede reagendar cuando desee.',    '2025-07-08 07:00:00', 1),
+(9,  'Su cita de control oncológico está programada. Recuerde llegar 15 min antes.',        '2025-07-09 09:01:00', 0),
+(10, 'Tiene una cita en Medicina Interna pendiente de confirmación.',                       '2025-07-10 10:31:00', 0);
