@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: rednortedb # Crea la BD principal
+    ports:
+      - "3306:3306"
+    volumes:
+      # Montamos un script para crear las otras 3 bases de datos automáticamente
+      - ./init-dbs.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      # Agregamos usuario y contraseña al ping para que no sea rechazado
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot"]
+      interval: 10s
+      retries: 5
+
+  backend:
+    build: . # Toma el Dockerfile que está en la raíz
+    ports:
+      - "8080:8080"
+    environment:
+      # Apuntamos al contenedor 'mysql' en vez de 'localhost' usando las nuevas variables
+      PRIMARY_DB_URL: jdbc:mysql://mysql:3306/rednortedb
+      PRIMARY_DB_USERNAME: root
+      PRIMARY_DB_PASSWORD: root
+
+      ESPERA_DB_URL: jdbc:mysql://mysql:3306/rednorte_espera
+      ESPERA_DB_USERNAME: root
+      ESPERA_DB_PASSWORD: root
+
+      NOTIFICACIONES_DB_URL: jdbc:mysql://mysql:3306/rednorte_notificaciones
+      NOTIFICACIONES_DB_USERNAME: root
+      NOTIFICACIONES_DB_PASSWORD: root
+
+      REASIGNACIONES_DB_URL: jdbc:mysql://mysql:3306/rednorte_reasignaciones
+      REASIGNACIONES_DB_USERNAME: root
+      REASIGNACIONES_DB_PASSWORD: root
+    depends_on:
+      mysql:
+        condition: service_healthy
