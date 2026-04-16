@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: frontend
+        working-directory: Frontend
 
     steps:
       - name: Checkout repository (git clone)
@@ -34,7 +34,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: backend
+        working-directory: Backend
     
     steps:
       - name: Checkout repository
@@ -60,7 +60,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: frontend
+        working-directory: Frontend
 
     steps:
       - name: Checkout repository (git clone)
@@ -83,7 +83,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: backend
+        working-directory: Backend
     
     steps:
       - name: Checkout repository (git clone)
