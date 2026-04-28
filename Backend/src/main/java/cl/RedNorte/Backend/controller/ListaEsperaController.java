@@ -13,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/listaEspera")
+@CrossOrigin(origins = "http://localhost:5173")
 @RequiredArgsConstructor
 @Tag(name = "Lista de Espera", description = "Gestión de registros y priorización de pacientes")
 public class ListaEsperaController {
