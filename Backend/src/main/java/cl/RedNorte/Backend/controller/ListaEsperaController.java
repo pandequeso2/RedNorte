@@ -4,10 +4,14 @@ import cl.RedNorte.Backend.model.espera.SolicitudEspera;
 import cl.RedNorte.Backend.service.ListaEsperaService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import cl.RedNorte.Backend.dto.RegistrarSolicitudRequest;
+import cl.RedNorte.Backend.factory.SolicitudEsperaFactory;
 
 import java.util.List;
 
@@ -19,12 +23,21 @@ import java.util.List;
 public class ListaEsperaController {
 
     private final ListaEsperaService listaEsperaService;
+    private final SolicitudEsperaFactory solicitudEsperaFactory;
 
-    @PostMapping("/registrar")
-    @Operation(summary = "Registrar un nuevo paciente en la lista de espera")
-    public ResponseEntity<SolicitudEspera> registrarSolicitud(@RequestBody SolicitudEspera solicitud) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(listaEsperaService.crearSolicitud(solicitud));
-    }
+@PostMapping("/registrar")
+@Operation(summary = "Registrar un nuevo paciente en la lista de espera")
+public ResponseEntity<SolicitudEspera> registrarSolicitud(
+        @RequestBody @Valid RegistrarSolicitudRequest request) {
+    SolicitudEspera nueva = solicitudEsperaFactory.crear(
+            request.getPacienteId(),
+            request.getEspecialidadId(),
+            request.getTipoAtencion(),
+            request.getObservaciones()
+        );
+    return ResponseEntity.status(HttpStatus.CREATED)
+                         .body(listaEsperaService.crearSolicitud(nueva));
+}
 
     @GetMapping("/criticos")
     @Operation(summary = "Obtener pacientes con mayor tiempo de espera", description = "Resuelve el problema de pacientes estancados")

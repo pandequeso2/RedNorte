@@ -13,6 +13,7 @@ import cl.RedNorte.Backend.repository.espera.SolicitudEsperaRepository;
 import cl.RedNorte.Backend.repository.primary.CitaMedicaRepository;
 import cl.RedNorte.Backend.repository.reasignacion.ReasignacionRepository;
 import lombok.RequiredArgsConstructor;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 
 @Service
 @RequiredArgsConstructor
@@ -22,12 +23,7 @@ public class ReasignacionService {
     private final ReasignacionRepository reasignacionRepository;
     private final CitaMedicaRepository citaMedicaRepository;
 
-    @Transactional
-    public void procesarCancelacion(Long citaId) {
-        var cita = citaMedicaRepository.findById(citaId)
-            .orElseThrow(() -> new RuntimeException("Cita no encontrada: " + citaId));
-        ejecutarLogicaReasignacion(cita.getId(), cita.getEspecialidad().getId());
-    }
+    
 
     @EventListener
     @Transactional
@@ -62,4 +58,18 @@ public class ReasignacionService {
             System.out.println("No hay pacientes en lista de espera para esta especialidad.");
         }
     }
+    @CircuitBreaker(name = "reasignacion", fallbackMethod = "fallbackReasignacion")
+
+    @Transactional
+    public void procesarCancelacion(Long citaId) {
+        var cita = citaMedicaRepository.findById(citaId)
+        .orElseThrow(() -> new RuntimeException("Cita no encontrada: " + citaId));
+        ejecutarLogicaReasignacion(cita.getId(), cita.getEspecialidad().getId());
+    }
+    // Método fallback obligatorio para Circuit Breaker
+    public void fallbackReasignacion(Long citaId, Throwable ex) {
+        System.err.println("Circuit Breaker activado para citaId=" + citaId
+            + " — Causa: " + ex.getMessage());
+    
+}
 }
