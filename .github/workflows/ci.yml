@@ -1,14 +1,11 @@
-#Inicio de yml
-name: CI Pipeline #nombre del flujo completo
+name: CI Pipeline
 
-#acciones que ejecutan el archivo, cuando se haga cualquier pull request o se haga un push a la rama develop
 on:
   pull_request:
   push:
     branches:
       - develop
 
-#os jobs son trabajos a ejecutar
 jobs:
   frontTest-build:
     runs-on: ubuntu-latest
@@ -17,18 +14,21 @@ jobs:
         working-directory: Frontend
 
     steps:
-      - name: Checkout repository (git clone)
-        uses: actions/checkout@v4 #Es lo mismo que hacer un git clone a la carpeta frontend del repositorio
+      - name: Checkout repository
+        uses: actions/checkout@v4
       
-      - name: Setup node (instalar node)
+      - name: Setup node
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          # cache: 'npm'
-      - run: npm install
-      - name: Ejecutar los Test
-        run: npm test -- --watchAll=false
+          cache: 'npm' # Habilitado para acelerar futuras ejecuciones
 
+      - name: Instalar dependencias
+        run: npm install
+
+      - name: Ejecutar los Test
+        # Eliminamos --watchAll=false porque Vitest usa "run" para CI
+        run: npm test
 
   backTest-build:
     runs-on: ubuntu-latest
@@ -46,27 +46,26 @@ jobs:
           java-version: '25'
           distribution: 'temurin'
           cache: 'maven'
+
       - name: Dar Permisos a maven
         run: chmod +x mvnw
+
       - name: Ejecutar las pruebas
-        run: ./mvnw compile
-
-
-
+        # Cambiado de 'compile' a 'test' para que realmente valide el código
+        run: ./mvnw test
 
   front-build:
-    needs: frontTest-build # NO construye si el test falla
+    needs: frontTest-build
     runs-on: ubuntu-latest
-
     defaults:
       run:
         working-directory: Frontend
 
     steps:
-      - name: Checkout repository (git clone)
-        uses: actions/checkout@v4 #Es lo mismo que hacer un git clone a la carpeta frontend del repositorio
+      - name: Checkout repository
+        uses: actions/checkout@v4
       
-      - name: Setup node (instalar node)
+      - name: Setup node
         uses: actions/setup-node@v4
         with:
           node-version: '20'
@@ -78,25 +77,24 @@ jobs:
         run: npm run build 
 
   back-build:
-    needs: backTest-build # NO construye si el test falla
+    needs: backTest-build
     runs-on: ubuntu-latest
-
     defaults:
       run:
         working-directory: Backend
     
     steps:
-      - name: Checkout repository (git clone)
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup JDK (Java) 25 #depende de la version de java del computador
+      - name: Setup JDK
         uses: actions/setup-java@v4
-        #Paso extra, verificar que instale la version 21 d java
         with:
           java-version: '25'
-          distribution: 'temurin' #distribuidora de maven
+          distribution: 'temurin'
           cache: 'maven'
-      - name: Dar permisos a maven de ejecucion #en ubuntu maven nesesita permisos para ejecutar el proyecto
+
+      - name: Dar permisos a maven
         run: chmod +x mvnw
 
       - name: Construir la aplicación
