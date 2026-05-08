@@ -1,7 +1,7 @@
 package cl.RedNorte.ListasEspera.repository;
 
 import cl.RedNorte.ListasEspera.model.EstadoCita;
-import cl.RedNorte.ListasEspera.model.primary.CitaMedica;
+import cl.RedNorte.ListasEspera.model.CitaMedica;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

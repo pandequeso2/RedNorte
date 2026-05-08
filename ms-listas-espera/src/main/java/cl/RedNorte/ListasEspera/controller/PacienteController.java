@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import cl.RedNorte.ListasEspera.model.primary.Paciente;
+import cl.RedNorte.ListasEspera.model.Paciente;
 import cl.RedNorte.ListasEspera.service.PacienteService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

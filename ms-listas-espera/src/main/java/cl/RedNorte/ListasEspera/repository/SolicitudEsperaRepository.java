@@ -1,7 +1,7 @@
 package cl.RedNorte.ListasEspera.repository;
 
-import cl.RedNorte.ListasEspera.model.espera.SolicitudEspera;
-import cl.RedNorte.ListasEspera.model.espera.TipoAtencion;
+import cl.RedNorte.ListasEspera.model.SolicitudEspera;
+import cl.RedNorte.ListasEspera.model.TipoAtencion;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

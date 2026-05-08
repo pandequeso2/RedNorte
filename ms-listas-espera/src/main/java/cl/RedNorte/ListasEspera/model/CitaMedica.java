@@ -2,7 +2,7 @@ package cl.RedNorte.ListasEspera.model;
 
 import java.time.LocalDateTime;
 
-import cl.RedNorte.ListasEspera.model.EstadoCita;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

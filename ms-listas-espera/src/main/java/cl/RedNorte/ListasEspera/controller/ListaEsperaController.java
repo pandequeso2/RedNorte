@@ -1,6 +1,6 @@
 package cl.RedNorte.ListasEspera.controller;
 
-import cl.RedNorte.ListasEspera.model.espera.SolicitudEspera;
+import cl.RedNorte.ListasEspera.model.SolicitudEspera;
 import cl.RedNorte.ListasEspera.service.ListaEsperaService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;

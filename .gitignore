@@ -1,1 +1,24 @@
-*terraform*
+# === Java / Maven ===
+**/target/
+**/target/*
+*.class
+*.jar
+*.war
+
+# === Terraform ===
+*.terraform*
+*.tfstate*
+*.tfvars
+
+# === IDEs (VS Code / IntelliJ) ===
+.vscode/
+.idea/
+*.swp
+*.DS_Store
+
+# === Logs ===
+*.log
+**/logs/
+
+# === OS Files ===
+Thumbs.db

@@ -5,7 +5,7 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import cl.RedNorte.ListasEspera.model.primary.Paciente;
+import cl.RedNorte.ListasEspera.model.Paciente;
 
 @Repository
 public interface PacienteRepository extends JpaRepository<Paciente, Long>{

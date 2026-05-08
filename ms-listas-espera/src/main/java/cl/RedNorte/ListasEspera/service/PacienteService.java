@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import cl.RedNorte.ListasEspera.model.primary.Paciente;
-import cl.RedNorte.ListasEspera.repository.primary.PacienteRepository;
+import cl.RedNorte.ListasEspera.model.Paciente;
+import cl.RedNorte.ListasEspera.repository.PacienteRepository;
 import lombok.RequiredArgsConstructor;
 
 @Service
