@@ -4,9 +4,9 @@
 FROM maven:3.9-eclipse-temurin-25 AS build
 WORKDIR /app
 
-# Copiamos el pom y el código fuente desde la carpeta Backend
-COPY Backend/pom.xml .
-COPY Backend/src ./src
+# Copiamos el pom y el código fuente (contexto = carpeta Backend)
+COPY pom.xml .
+COPY src ./src
 
 # Compilamos el proyecto omitiendo los tests para que sea más rápido
 RUN mvn clean package -DskipTests

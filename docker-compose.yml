@@ -5,24 +5,23 @@ services:
     image: mysql:8
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: rednortedb # Crea la BD principal
-    ports:
-      - "3306:3306"
+      MYSQL_DATABASE: rednortedb
+    #ports:
+      #- "3306:3306"
     volumes:
-      # Montamos un script para crear las otras 3 bases de datos automáticamente
       - ./init-dbs.sql:/docker-entrypoint-initdb.d/init.sql
     healthcheck:
-      # Agregamos usuario y contraseña al ping para que no sea rechazado
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot"]
       interval: 10s
       retries: 5
 
   backend:
-    build: . # Toma el Dockerfile que está en la raíz
+    build:
+      context: ./Backend
+      dockerfile: Dockerfile
     ports:
       - "8080:8080"
     environment:
-      # Apuntamos al contenedor 'mysql' en vez de 'localhost' usando las nuevas variables
       PRIMARY_DB_URL: jdbc:mysql://mysql:3306/rednortedb
       PRIMARY_DB_USERNAME: root
       PRIMARY_DB_PASSWORD: root
@@ -41,3 +40,11 @@ services:
     depends_on:
       mysql:
         condition: service_healthy
+  frontend:
+    build:
+      context: ./Frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
