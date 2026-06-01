@@ -1,0 +1,13 @@
+@import "tailwindcss";
+
+@theme {
+  /* Nuestra paleta de colores médicos */
+  --color-medical-light: #e0f2fe;
+  --color-medical-main: #0056b3;
+  --color-medical-dark: #003d82;
+}
+
+body {
+  background-color: #F8FAFC; /* Blanco humo para la interfaz */
+  margin: 0;
+}
