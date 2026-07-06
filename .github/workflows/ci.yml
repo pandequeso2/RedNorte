@@ -5,14 +5,12 @@ on:
   push:
     branches:
       - develop
-
 jobs:
   frontTest-build:
     runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: Frontend
-
     steps:
       - name: Checkout repository (git clone)
         uses: actions/checkout@v4

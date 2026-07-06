@@ -142,7 +142,7 @@ RedNorte/
 │   ├── vpc.tf                      # VPC, subredes, NAT Gateway
 │   └── variables.tf
 ├── docker-compose.yml
-├── init-dbs.sql
+├── init dbs.sql
 └── README.md
 ```
 
