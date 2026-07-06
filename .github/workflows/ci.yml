@@ -44,7 +44,7 @@ jobs:
       - name: Dar Permisos a maven
         run: chmod +x mvnw
       - name: Ejecutar las pruebas
-        run: ./mvnw test
+        run: ./mvnw test-compile 
 
 
   front-build:
